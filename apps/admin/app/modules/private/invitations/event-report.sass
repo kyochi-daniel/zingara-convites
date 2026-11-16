@@ -1,0 +1,195 @@
+$event-report-value: 23px
+
+.event-report
+  display: flex
+  width: 100%
+  min-width: 0
+  flex-direction: column
+  gap: 16px
+  color: var(--design-text)
+  font: inherit
+  line-height: 1.5
+
+.design-shell .invitation-shell > *
+  min-width: 0
+
+.event-report-heading
+  display: flex
+  width: 100%
+  min-width: 0
+  align-items: flex-start
+  justify-content: space-between
+  gap: 16px
+
+  h2, h3, h4, p
+    margin: 0 0 0 0
+
+  p
+    margin: 4px 0 0 0
+    color: var(--design-muted)
+
+  button
+    flex: 0 0 auto
+
+    &:focus-visible
+      outline: 2px solid var(--design-accent)
+      outline-offset: 3px
+
+.event-report-metrics
+  display: flex
+  width: 100%
+  min-width: 0
+  margin: 0 0 0 0
+  flex-wrap: wrap
+  gap: 16px
+
+.event-report-metric
+  display: flex
+  box-sizing: border-box
+  width: calc((100% - 32px) / 3)
+  min-width: 0
+  min-height: 96px
+  flex-direction: column
+  justify-content: space-between
+  gap: 12px
+  padding: 16px 16px 16px 16px
+  background: var(--design-surface)
+  border: 1px solid var(--design-border)
+  border-radius: 16px 16px 16px 16px
+
+  span, dt
+    color: var(--design-muted)
+
+  dt, dd
+    margin: 0 0 0 0
+
+.event-report-metric-value
+  color: var(--design-text)
+  font-size: $event-report-value
+  line-height: 1
+
+.event-report .invitation-totals
+  display: flex
+  width: 100%
+  min-width: 0
+  margin: 0 0 0 0
+  flex-wrap: wrap
+  gap: 16px
+
+  > div
+    display: flex
+    box-sizing: border-box
+    width: calc((100% - 48px) / 4)
+    min-width: 0
+    flex-direction: column
+    justify-content: space-between
+    gap: 8px
+    padding: 12px 12px 12px 12px
+    background: var(--design-bg)
+    border: 1px solid var(--design-border)
+    border-radius: 12px 12px 12px 12px
+
+  dt
+    color: var(--design-muted)
+
+  dd
+    margin: 0 0 0 0
+    color: var(--design-text)
+    font-size: $event-report-value
+    line-height: 1
+
+.event-report-table-scroll
+  width: 100%
+  min-width: 0
+  overflow-x: auto
+  overflow-y: hidden
+  border: 1px solid var(--design-border)
+  border-radius: 12px 12px 12px 12px
+  overscroll-behavior-inline: contain
+  scrollbar-color: var(--design-muted) var(--design-bg)
+
+  &:focus-visible
+    outline: 2px solid var(--design-accent)
+    outline-offset: 3px
+
+.event-report-table
+  width: max-content
+  min-width: 100%
+  border-collapse: collapse
+  color: var(--design-text)
+  text-align: left
+
+  th, td
+    padding: 12px 16px 12px 16px
+    border-bottom: 1px solid var(--design-border)
+
+  th
+    color: var(--design-muted)
+    background: var(--design-bg)
+    white-space: nowrap
+
+  th:nth-child(2), td:nth-child(2)
+    white-space: nowrap
+
+  td
+    background: var(--design-surface)
+
+  tbody tr:last-child td
+    border-bottom: 0
+
+.event-report-notice
+  width: 100%
+  margin: 0 0 0 0
+  padding: 12px 16px 12px 16px
+  color: var(--design-text)
+  background: var(--design-bg)
+  border: 1px solid var(--design-accent)
+  border-radius: 12px 12px 12px 12px
+
+.event-report-copy-fallback
+  display: block
+  width: 100%
+  min-height: 96px
+  margin: 0 0 0 0
+  padding: 12px 16px 12px 16px
+  color: var(--design-text)
+  background: var(--design-bg)
+  border: 1px solid var(--design-border)
+  border-radius: 12px 12px 12px 12px
+  font: inherit
+  line-height: 1.5
+
+  &:focus-visible
+    outline: 2px solid var(--design-accent)
+    outline-offset: 3px
+
+@media screen and (max-width: 1000px)
+  .event-report-heading
+    flex-direction: column
+    gap: 12px
+
+  .event-report-heading button
+    width: 100%
+
+  .event-report-metrics
+    flex-direction: column
+    gap: 12px
+
+  .event-report-metric
+    width: 100%
+    min-height: 0
+    gap: 8px
+    padding: 12px 12px 12px 12px
+
+  .event-report .invitation-totals
+    flex-direction: column
+    gap: 12px
+
+    > div
+      width: 100%
+
+  .event-report-table-scroll
+    border-radius: 10px 10px 10px 10px
+
+  .event-report-table th, .event-report-table td
+    padding: 12px 12px 12px 12px

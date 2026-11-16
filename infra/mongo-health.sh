@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+mongosh --quiet --host localhost --eval '
+  const admin = db.getSiblingDB("admin");
+  if (!admin.auth(process.env.MONGO_INITDB_ROOT_USERNAME, process.env.MONGO_INITDB_ROOT_PASSWORD)) quit(1);
+  if (admin.runCommand({ ping: 1 }).ok !== 1) quit(1);
+' >/dev/null

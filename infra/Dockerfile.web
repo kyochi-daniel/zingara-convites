@@ -1,0 +1,21 @@
+FROM node:24.11.1-bookworm-slim AS build
+WORKDIR /app
+RUN corepack enable
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps ./apps
+COPY packages ./packages
+RUN pnpm install --frozen-lockfile
+ARG APP
+RUN test "$APP" = api || test "$APP" = admin || test "$APP" = invite
+RUN pnpm --filter "@zingara/$APP" build
+RUN if [ "$APP" = api ]; then pnpm exec esbuild apps/api/scripts/bootstrap-admin.ts --bundle --platform=node --format=esm --target=node24 --external:argon2 --external:jose --external:mongoose --external:zod --outfile=apps/api/.output/server/bootstrap-admin.mjs; fi
+
+FROM node:24.11.1-bookworm-slim
+WORKDIR /app
+ENV NODE_ENV=production NITRO_HOST=0.0.0.0 NITRO_PORT=3000
+ARG APP
+COPY --from=build --chown=node:node /app/apps/${APP}/.output ./.output
+RUN mkdir -p /app/uploads /app/artwork && chown node:node /app/uploads /app/artwork
+USER node
+EXPOSE 3000
+CMD ["node", ".output/server/index.mjs"]

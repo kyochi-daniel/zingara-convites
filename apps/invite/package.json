@@ -1,0 +1,16 @@
+{
+  "name": "@zingara/invite",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev --port ${INVITE_PORT:-3001}",
+    "build": "nuxt build",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@zingara/contracts": "workspace:*",
+    "h3": "1.15.11",
+    "nuxt": "4.5.2",
+    "sass": "1.105.0"
+  }
+}

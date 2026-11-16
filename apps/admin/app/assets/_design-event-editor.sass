@@ -1,0 +1,374 @@
+.design-event-editor
+  &__starter
+    padding: 12px 14px
+    border: 1px solid rgba(215, 209, 151, .24)
+    border-radius: 10px
+    color: #d7d197
+    background: rgba(215, 209, 151, .08)
+    font-size: 11px
+    line-height: 1.5
+
+  &__date-help
+    margin: 0
+    color: #a8a4ad
+    font-size: 11px
+    line-height: 1.5
+  --event-bg: var(--bg-deep, #090a0b)
+  --event-surface: var(--surface-raised, #151618)
+  --event-surface-deep: var(--surface-deep, #121315)
+  --event-border: var(--border-subtle, #292a2d)
+  --event-text: var(--text-primary, #f3f1f5)
+  --event-muted: var(--text-muted, #89858d)
+  --event-accent: var(--accent, #e8e5a8)
+  width: 100%
+  max-width: 1320px
+  margin: 0 auto
+  padding: 28px clamp(16px, 2.2vw, 32px) 42px
+  color: var(--event-text)
+  background: var(--event-bg)
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif
+
+  *, *::before, *::after
+    box-sizing: border-box
+
+  h1, h2, p
+    margin: 0
+
+  &__heading
+    display: flex
+    align-items: flex-end
+    justify-content: space-between
+    gap: 24px
+    margin-bottom: 22px
+
+  &__eyebrow
+    color: var(--event-muted)
+    font-size: 10px
+    font-weight: 650
+    letter-spacing: .1em
+    text-transform: uppercase
+
+    span
+      padding: 0 5px
+      color: var(--event-border)
+
+  h1
+    margin-top: 9px
+    font-size: clamp(25px, 3vw, 31px)
+    font-weight: 650
+    letter-spacing: -.035em
+
+  &__subtitle
+    margin-top: 4px !important
+    color: var(--event-muted)
+    font-size: 12px
+
+  &__actions
+    display: flex
+    flex: 0 0 auto
+    gap: 9px
+
+  &__button
+    min-height: 44px
+    padding: 0 17px
+    border: 1px solid var(--event-border)
+    border-radius: 11px
+    color: var(--event-text)
+    background: var(--event-surface)
+    cursor: pointer
+    font: inherit
+    font-size: 11px
+    font-weight: 650
+
+    &:focus-visible
+      outline: 2px solid var(--event-accent)
+      outline-offset: 2px
+
+    &:disabled
+      cursor: wait
+      opacity: .65
+
+    &--save
+      padding: 0 23px
+      border-color: transparent
+      color: #171719
+      background: linear-gradient(105deg, #f1efb5, #d9c5f3)
+
+      &:hover:not(:disabled)
+        filter: brightness(1.06)
+
+  &__layout
+    display: grid
+    grid-template-columns: minmax(0, 1fr)
+    align-items: start
+    gap: 14px
+
+    &--summary
+      grid-template-columns: minmax(0, 1.75fr) minmax(270px, .9fr)
+
+  &__card
+    min-width: 0
+    overflow: hidden
+    border: 1px solid var(--event-border)
+    border-radius: 17px
+    background: var(--event-surface)
+
+  &__form
+    padding: 13px
+
+  &__hero
+    position: relative
+    overflow: hidden
+    aspect-ratio: 2098 / 749
+    border-radius: 13px
+    background: var(--event-surface-deep)
+
+    img
+      display: block
+      width: 100%
+      height: 100%
+      object-fit: cover
+      object-position: center
+
+  &__fields
+    display: grid
+    gap: 12px
+    padding: 18px 2px 4px
+
+  &__section-title
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 12px
+
+    h2
+      font-size: 13px
+      font-weight: 650
+
+    > div > p:not(.design-event-editor__eyebrow)
+      margin-top: 4px
+      color: var(--event-muted)
+      font-size: 10px
+      line-height: 1.4
+
+  &__section-title > div > .design-event-editor__eyebrow + h2
+    margin-top: 4px
+
+  &__status
+    flex: 0 0 auto
+    padding: 5px 8px
+    border: 1px solid var(--event-border)
+    border-radius: 999px
+    color: var(--event-muted)
+    font-size: 9px
+    font-weight: 600
+
+  &__status
+    color: #d7d197
+    border-color: rgba(215, 209, 151, .24)
+    background: rgba(215, 209, 151, .08)
+
+  &__field
+    display: grid
+    min-width: 0
+    gap: 6px
+
+    label
+      color: #aaa6ae
+      font-size: 10px
+      font-weight: 550
+
+      span
+        color: #e7b3a8
+
+    input, textarea, select
+      width: 100%
+      min-width: 0
+      min-height: 41px
+      padding: 10px 12px
+      border: 1px solid var(--event-border)
+      border-radius: 10px
+      color: var(--event-text)
+      background: #131416
+      font: inherit
+      font-size: 11px
+
+      &:focus
+        border-color: #8e8a71
+        outline: 0
+
+      &:focus-visible
+        border-color: var(--event-accent)
+        outline: 2px solid var(--event-accent)
+        outline-offset: 2px
+
+    select
+      color-scheme: dark
+
+    textarea
+      min-height: 76px
+      resize: vertical
+
+    input[type='datetime-local']
+      color-scheme: dark
+
+    input[type='number']
+      appearance: textfield
+
+      &::-webkit-inner-spin-button, &::-webkit-outer-spin-button
+        margin: 0
+        appearance: none
+
+  &__field-row
+    display: grid
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+    gap: 12px
+
+  &__field-row--policy
+    align-items: end
+
+  &__check
+    display: flex
+    min-height: 41px
+    align-items: center
+    gap: 9px
+    color: #c8c4cc
+    font-size: 10px
+
+    input
+      width: 16px
+      height: 16px
+      accent-color: #a8d782
+
+  &__draft-note
+    display: flex
+    align-items: center
+    gap: 8px
+    margin: 12px 0 0 !important
+    padding: 10px 12px
+    border-radius: 10px
+    color: var(--event-muted)
+    background: var(--event-surface-deep)
+    font-size: 9px
+
+    span
+      display: grid
+      width: 15px
+      height: 15px
+      place-items: center
+      border-radius: 50%
+      color: #aaa6ae
+      background: #242528
+      font-size: 9px
+
+  &__side
+    min-width: 0
+
+  &__summary
+    padding: 17px
+
+  &__summary
+    display: grid
+    gap: 12px
+
+    > p
+      display: flex
+      align-items: baseline
+      gap: 10px
+      color: var(--event-muted)
+      font-size: 10px
+
+      strong
+        min-width: 35px
+        color: #f3f1f5
+        font-size: 19px
+        font-weight: 600
+
+      &:nth-of-type(2) strong
+        color: #b9eac8
+
+      &:nth-of-type(3) strong
+        color: #f2e7a5
+
+@media (max-width: 860px)
+  .design-event-editor
+    &__layout--summary
+      grid-template-columns: minmax(0, 1fr) minmax(230px, .78fr)
+
+    &__field-row
+      grid-template-columns: 1fr
+
+@media (max-width: 640px)
+  .design-event-editor
+    padding: 21px 14px 105px
+
+    &__heading
+      align-items: flex-start
+      gap: 14px
+
+    &__heading > div:first-child
+      min-width: 0
+
+    h1
+      margin-top: 14px
+      font-size: 28px
+
+    &__subtitle
+      max-width: 280px
+      line-height: 1.45
+
+    &__actions
+      gap: 7px
+
+    &__button
+      min-height: 44px
+      padding: 0 11px
+      font-size: 10px
+
+      &--quiet
+        display: none
+
+      &--save
+        padding: 0 16px
+
+    &__layout
+      grid-template-columns: 1fr
+      gap: 13px
+
+    &__form
+      padding: 10px
+
+    &__hero
+      border-radius: 12px
+
+    &__fields
+      gap: 11px
+      padding: 17px 3px 3px
+
+    &__field-row
+      grid-template-columns: repeat(2, minmax(0, 1fr))
+      gap: 9px
+
+    &__field-row--policy
+      grid-template-columns: minmax(110px, .6fr) minmax(0, 1fr)
+
+    &__field input, &__field select
+      min-height: 43px
+      padding: 9px
+      font-size: 10px
+
+    &__summary
+      padding: 15px
+
+@media (max-width: 480px)
+  .design-event-editor
+    &__heading
+      display: grid
+      grid-template-columns: minmax(0, 1fr) auto
+      align-items: end
+
+    &__field-row, &__field-row--policy
+      grid-template-columns: 1fr
+
+    &__check
+      min-height: 32px

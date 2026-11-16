@@ -1,0 +1,14 @@
+packages:
+  - apps/*
+  - packages/*
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - argon2
+  - esbuild
+allowBuilds:
+  '@parcel/watcher': true
+  argon2: true
+  esbuild: true
+  msgpackr-extract: false
+minimumReleaseAgeExclude:
+  - '@fission-ai/openspec@1.13.2'

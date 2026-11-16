@@ -1,0 +1,22 @@
+{
+  "name": "@zingara/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nitro dev --port ${API_PORT:-4000}",
+    "build": "nitro build",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@zingara/artwork": "workspace:*",
+    "@zingara/automations": "workspace:*",
+    "@zingara/contracts": "workspace:*",
+    "@zingara/core": "workspace:*",
+    "@zingara/database": "workspace:*",
+    "@zingara/integrations": "workspace:*",
+    "h3": "1.15.11",
+    "nitropack": "2.13.4",
+    "sharp": "0.35.4",
+    "word-extractor": "1.0.4"
+  }
+}

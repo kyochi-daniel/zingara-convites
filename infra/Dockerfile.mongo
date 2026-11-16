@@ -1,0 +1,2 @@
+FROM mongo:8.0.16
+COPY mongo-entrypoint.sh mongo-health.sh mongo-init.sh /opt/zingara/

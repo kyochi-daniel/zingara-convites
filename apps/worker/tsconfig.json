@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2024",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noEmit": true,
+    "types": ["node"],
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "@zingara/artwork": ["../../packages/artwork/src/index.ts"],
+      "@zingara/automations": ["../../packages/automations/src/index.ts"],
+      "@zingara/core": ["../../packages/core/src/index.ts"],
+      "@zingara/database": ["../../packages/database/src/index.ts"],
+      "@zingara/contracts": ["../../packages/contracts/src/index.ts"],
+      "@zingara/integrations": ["../../packages/integrations/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "../../packages/artwork/src/**/*.ts", "../../packages/automations/src/**/*.ts", "../../packages/core/src/**/*.ts", "../../packages/database/src/**/*.ts", "../../packages/contracts/src/**/*.ts", "../../packages/integrations/src/**/*.ts"]
+}

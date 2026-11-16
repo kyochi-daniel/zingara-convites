@@ -1,0 +1,454 @@
+$shell-deep: var(--design-deep, #090a0b)
+$shell-base: var(--design-bg, #0e0f10)
+$shell-surface: var(--design-surface, #171819)
+$shell-active: #191b1c
+$shell-border: var(--design-border, #343539)
+$shell-text: var(--design-text, #f3f1f5)
+$shell-muted: var(--design-muted, #7e7a84)
+$shell-nav-muted: #b2aeb7
+$shell-highlight: var(--design-accent, #f2f1d0)
+$shell-gradient: var(--design-gradient, linear-gradient(105deg, #f5f1b0 0%, #d8e0ff 54%, #ebd3f4 100%))
+
+:global(:root)
+  --design-bg: #0e0f10
+  --design-deep: #090a0b
+  --design-surface: #171819
+  --design-border: #343539
+  --design-text: #f3f1f5
+  --design-muted: #7e7a84
+  --design-accent: #f2f1d0
+  --design-gradient: linear-gradient(105deg, #f5f1b0 0%, #d8e0ff 54%, #ebd3f4 100%)
+
+.design-shell
+  min-height: 100vh
+  color: $shell-text
+  background: $shell-base
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif
+  font-synthesis: none
+  text-rendering: optimizeLegibility
+
+  *, *::before, *::after
+    box-sizing: border-box
+
+  button, a
+    font: inherit
+
+  button:focus-visible, a:focus-visible, select:focus-visible, summary:focus-visible
+    outline: 2px solid #d8e0ff
+    outline-offset: 3px
+
+.design-sidebar
+  position: fixed
+  z-index: 2
+  inset: 0 auto 0 0
+  display: flex
+  width: 236px
+  flex-direction: column
+  padding: 24px 20px 16px
+  background: $shell-deep
+  border-right: 1px solid $shell-border
+
+.design-profile-copy
+  display: grid
+  gap: 2px
+
+.design-organization-select
+  display: flex
+  width: 100%
+  flex-direction: column
+  gap: 6px
+  margin: 0
+  color: $shell-muted
+  font-size: 10px
+
+  select
+    width: 100%
+    min-height: 38px
+    padding: 0 10px 0 10px
+    color: $shell-text
+    background: $shell-surface
+    border: 1px solid $shell-border
+    border-radius: 10px 10px 10px 10px
+    cursor: pointer
+
+    &:disabled
+      cursor: not-allowed
+      opacity: .65
+
+.design-mobile-header
+  display: none
+
+.design-nav-heading
+  margin: 34px 0 10px 6px
+  color: $shell-muted
+  font-size: 10px
+  font-weight: 650
+  letter-spacing: .04em
+  text-transform: uppercase
+
+.design-nav
+  display: grid
+  gap: 6px
+
+.design-menu
+  position: relative
+  min-width: 0
+
+  summary
+    list-style: none
+
+    &::-webkit-details-marker
+      display: none
+
+.design-menu-chevron
+  flex: 0 0 auto
+  color: $shell-muted
+  transition: transform .2s ease
+
+.design-menu[open] .design-menu-chevron
+  transform: rotate(180deg)
+
+.design-settings-menu
+  .design-nav-link
+    width: 100%
+
+.design-settings-links
+  display: flex
+  flex-direction: column
+  gap: 4px
+  margin: 4px 0 0 34px
+
+  button
+    min-height: 36px
+    padding: 0 10px 0 10px
+    color: $shell-nav-muted
+    background: transparent
+    border: 0
+    border-radius: 10px 10px 10px 10px
+    cursor: pointer
+    text-align: left
+
+    &[aria-current='page'], &:hover
+      color: $shell-highlight
+      background: $shell-active
+
+.design-menu-panel
+  position: absolute
+  z-index: 4
+  right: 0
+  bottom: calc(100% + 8px)
+  display: flex
+  width: 176px
+  flex-direction: column
+  gap: 4px
+  padding: 6px 6px 6px 6px
+  background: $shell-surface
+  border: 1px solid $shell-border
+  border-radius: 12px 12px 12px 12px
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .28)
+
+  button, .design-menu-link
+    display: flex
+    min-height: 38px
+    align-items: center
+    padding: 0 10px 0 10px
+    color: $shell-text
+    background: transparent
+    border: 0
+    border-radius: 8px 8px 8px 8px
+    cursor: pointer
+    text-align: left
+    text-decoration: none
+
+    &:hover
+      background: $shell-active
+
+.design-nav-link
+  display: flex
+  min-width: 0
+  min-height: 48px
+  align-items: center
+  gap: 12px
+  padding: 0 12px 0 14px
+  color: $shell-nav-muted
+  background: transparent
+  border: 0
+  border-radius: 14px
+  cursor: pointer
+  text-align: left
+
+  &.is-active
+    color: $shell-highlight
+    background: $shell-active
+
+    .design-nav-label
+      font-weight: 650
+
+.design-nav-label
+  flex: 1
+  font-size: 13px
+  font-weight: 500
+
+.design-nav-marker
+  width: 3px
+  height: 22px
+  flex: 0 0 auto
+  border-radius: 2px
+
+.design-nav-link.is-active .design-nav-marker
+  background: $shell-gradient
+
+.design-nav-icon-frame
+  display: grid
+  width: 20px
+  height: 20px
+  flex: 0 0 20px
+  place-items: center
+
+.design-nav-icon
+  display: block
+  max-width: 20px
+  max-height: 20px
+  object-fit: contain
+
+  &[src$="sidebar-settings.svg"]
+    width: 15px
+    height: 15px
+
+.design-active-dot
+  flex: 0 0 auto
+
+.design-system-heading
+  margin-top: 58px
+
+.design-sidebar-footer
+  margin-top: auto
+
+.design-profile
+  display: flex
+  min-width: 0
+  min-height: 64px
+  align-items: center
+  gap: 10px
+  padding: 0 11px
+  background: #121314
+  border: 1px solid rgba(42, 44, 47, .85)
+  border-radius: 16px
+
+  .design-profile-copy
+    min-width: 0
+    flex: 1
+
+  strong
+    overflow: hidden
+    color: #ece9ef
+    font-size: 12.5px
+    font-weight: 650
+    text-overflow: ellipsis
+    white-space: nowrap
+
+  small
+    overflow: hidden
+    color: #85818a
+    font-size: 10px
+    text-overflow: ellipsis
+    white-space: nowrap
+
+.design-profile-trigger
+  cursor: pointer
+
+.design-profile-menu .design-menu-panel
+  left: 0
+  right: auto
+
+.design-main-column
+  min-height: 100vh
+  margin-left: 236px
+
+.design-topbar
+  position: sticky
+  z-index: 1
+  top: 0
+  display: flex
+  min-height: 52px
+  align-items: center
+  justify-content: space-between
+  gap: 20px
+  padding: 0 28px
+  background: rgba(14, 15, 16, .96)
+  border-bottom: 1px solid rgba(52, 53, 57, .75)
+  backdrop-filter: blur(14px)
+
+.design-page-title
+  color: #aaa7ae
+  font-size: 12px
+
+.design-topbar-actions
+  display: flex
+  min-width: 0
+  align-items: center
+  gap: 12px
+
+.avatar
+  display: grid
+  width: 38px
+  height: 38px
+  flex: 0 0 auto
+  place-items: center
+  color: #171719
+  background: $shell-gradient
+  border-radius: 50%
+  font-size: 12px
+  font-weight: 800
+
+.design-profile .avatar
+  min-width: 38px
+  flex: 0 0 38px
+
+.design-topbar .avatar
+  width: 44px
+  height: 44px
+
+.design-topbar-account strong
+  color: #edeaf0
+  font-size: 12.5px
+  font-weight: 650
+
+.design-topbar-account small
+  color: #85818a
+  font-size: 10px
+
+.design-content
+  min-width: 0
+  padding: 28px
+
+.design-bottom-nav
+  display: none
+
+@media (max-width: 760px)
+  .design-sidebar
+    display: none
+
+  .design-main-column
+    margin-left: 0
+
+  .design-mobile-header
+    position: sticky
+    z-index: 3
+    top: 0
+    display: flex
+    min-height: calc(68px + env(safe-area-inset-top))
+    align-items: flex-end
+    justify-content: space-between
+    gap: 12px
+    padding: env(safe-area-inset-top) 20px 10px 20px
+    background: rgba(14, 15, 16, .96)
+    border-bottom: 1px solid rgba(52, 53, 57, .75)
+    backdrop-filter: blur(14px)
+
+    .design-organization-select
+      width: calc(100% - 56px)
+      margin: 0 0 0 0
+
+      select
+        min-height: 44px
+
+  .design-mobile-profile
+    flex: 0 0 auto
+
+    .design-menu-panel
+      bottom: auto
+      top: calc(100% + 8px)
+
+  .design-profile-trigger.avatar
+    width: 44px
+    height: 44px
+    cursor: pointer
+
+  .design-topbar
+    display: none
+
+  .design-topbar.has-toolbar
+    position: relative
+    top: auto
+    display: flex
+    min-height: 0
+    padding: 12px 20px 0
+    background: transparent
+    border: 0
+    backdrop-filter: none
+
+  .design-topbar.has-toolbar .design-page-title,
+  .design-topbar.has-toolbar .avatar,
+  .design-topbar.has-toolbar .design-topbar-account
+    display: none
+
+  .design-topbar.has-toolbar .design-topbar-actions
+    width: 100%
+
+  .design-content
+    padding: 18px 20px calc(104px + env(safe-area-inset-bottom))
+
+  .design-bottom-nav
+    position: fixed
+    z-index: 5
+    right: 0
+    bottom: 0
+    left: 0
+    display: flex
+    min-height: calc(82px + env(safe-area-inset-bottom))
+    align-items: center
+    justify-content: space-between
+    gap: 4px
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom))
+    background: rgba(10, 10, 11, .98)
+    border: 1px solid rgba(42, 43, 45, .8)
+    backdrop-filter: blur(12px)
+
+  .design-mobile-more
+    display: flex
+    width: 25%
+    justify-content: center
+
+    .design-bottom-link
+      width: 100%
+
+    .design-menu-panel
+      right: 0
+      bottom: calc(100% + 10px)
+
+  .design-bottom-link
+    display: flex
+    min-width: 0
+    min-height: 58px
+    flex: 1
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    gap: 5px
+    padding: 0 2px
+    color: #aaa7ae
+    background: transparent
+    border: 0
+    border-radius: 12px
+    cursor: pointer
+    font-size: 11px
+
+    img
+      display: block
+      max-width: 22px
+      max-height: 22px
+      flex: 0 0 auto
+      object-fit: contain
+
+    &.is-active
+      color: #eef2be
+      font-weight: 650
+
+@media (max-width: 360px)
+  .design-bottom-nav
+    padding-right: 6px
+    padding-left: 6px
+
+  .design-bottom-link
+    font-size: 10px

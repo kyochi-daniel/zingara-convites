@@ -1,0 +1,33 @@
+{
+  "name": "zingara-convites",
+  "private": true,
+  "packageManager": "pnpm@11.17.0",
+  "engines": { "node": ">=24 <25" },
+  "scripts": {
+    "dev": "node --env-file=.env scripts/run-dev.mjs",
+    "build": "turbo build --ui=stream",
+    "typecheck": "turbo typecheck --ui=stream",
+    "test": "pnpm --filter @zingara/admin exec nuxt prepare && pnpm --filter @zingara/invite exec nuxt prepare && vitest run --exclude 'tests/integration/**' --exclude 'tests/e2e/**'",
+    "test:integration": "pnpm --filter @zingara/api build && pnpm --filter @zingara/invite build && vitest run tests/integration",
+    "test:integration:vitest": "vitest run tests/integration",
+    "test:e2e": "pnpm build && playwright test",
+    "lint": "oxlint apps packages scripts tests --vue-plugin --deny-warnings",
+    "spec:validate": "openspec validate --all --strict --no-interactive",
+    "check": "pnpm spec:validate && pnpm lint && pnpm test && pnpm test:integration && pnpm typecheck && pnpm test:e2e",
+    "worktree:setup": "node scripts/worktree-setup.mjs",
+    "worktree:doctor": "node scripts/worktree-doctor.mjs",
+    "admin:bootstrap": "node --env-file=.env --experimental-strip-types apps/api/scripts/bootstrap-admin.ts"
+  },
+  "devDependencies": {
+    "@fission-ai/openspec": "1.13.2",
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.10.0",
+    "@nuxt/test-utils": "4.3.2",
+    "esbuild": "0.28.2",
+    "oxlint": "1.85.0",
+    "turbo": "2.11.3",
+    "typescript": "5.9.3",
+    "vue-tsc": "3.3.11",
+    "vitest": "5.0.1"
+  }
+}

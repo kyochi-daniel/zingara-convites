@@ -1,0 +1,13 @@
+.git
+.env
+.env.*
+**/node_modules
+**/.nuxt
+**/.output
+**/.turbo
+test-results
+playwright-report
+docs
+openspec
+tests
+*.log

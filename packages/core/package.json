@@ -1,0 +1,14 @@
+{
+  "name": "@zingara/core",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts", "./campaigns": "./src/campaigns.ts" },
+  "dependencies": {
+    "@zingara/contracts": "workspace:*",
+    "@zingara/database": "workspace:*",
+    "@zingara/integrations": "workspace:*",
+    "argon2": "0.45.1",
+    "jose": "6.2.12",
+    "word-extractor": "1.0.4"
+  }
+}

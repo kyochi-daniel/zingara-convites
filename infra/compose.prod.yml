@@ -1,0 +1,175 @@
+services:
+  mongo:
+    build: { context: ., dockerfile: Dockerfile.mongo }
+    networks: [backend]
+    restart: unless-stopped
+    command: ["bash", "/opt/zingara/mongo-entrypoint.sh"]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:?MONGO_USER ausente}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:?MONGO_PASSWORD ausente}
+      MONGO_DATABASE: ${MONGO_DATABASE:-zingara}
+      MONGO_REPLICA_KEY: ${MONGO_REPLICA_KEY:?MONGO_REPLICA_KEY ausente}
+    volumes:
+      - mongo_data:/data/db
+      - mongo_config:/data/configdb
+    healthcheck:
+      test: ["CMD", "bash", "/opt/zingara/mongo-health.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    mem_limit: ${MONGO_MEM_LIMIT:-1g}
+
+  mongo-init:
+    build: { context: ., dockerfile: Dockerfile.mongo }
+    networks: [backend]
+    restart: "no"
+    depends_on:
+      mongo: { condition: service_healthy }
+    environment:
+      MONGO_USER: ${MONGO_USER:?MONGO_USER ausente}
+      MONGO_PASSWORD: ${MONGO_PASSWORD:?MONGO_PASSWORD ausente}
+    command: ["bash", "/opt/zingara/mongo-init.sh"]
+
+  redis:
+    image: redis:7.4.7-alpine
+    networks: [backend]
+    restart: unless-stopped
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?REDIS_PASSWORD ausente}
+    command: ["sh", "-c", "exec redis-server --appendonly yes --maxmemory-policy noeviction --requirepass \"$$REDIS_PASSWORD\""]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH=\"$$REDIS_PASSWORD\" redis-cli ping | grep -qx PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    mem_limit: ${REDIS_MEM_LIMIT:-512m}
+
+  api:
+    build: { context: .., dockerfile: infra/Dockerfile.web, args: { APP: api } }
+    networks: [backend]
+    init: true
+    restart: unless-stopped
+    depends_on:
+      mongo-init: { condition: service_completed_successfully }
+    environment:
+      MONGODB_URI: mongodb://${MONGO_USER:?}:${MONGO_PASSWORD:?}@mongo:27017/${MONGO_DATABASE:-zingara}?authSource=admin&replicaSet=rs0
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET ausente}
+      JWT_ISSUER: ${JWT_ISSUER:-zingara}
+      JWT_AUDIENCE: ${JWT_AUDIENCE:-zingara-admin}
+      ADMIN_ORIGIN: ${ADMIN_ORIGIN:?ADMIN_ORIGIN ausente}
+      INVITE_ORIGIN: ${INVITE_ORIGIN:?INVITE_ORIGIN ausente}
+      INVITE_LINK_KEY: ${INVITE_LINK_KEY:?INVITE_LINK_KEY ausente}
+      EVOLUTION_CREDENTIAL_KEY: ${EVOLUTION_CREDENTIAL_KEY:?EVOLUTION_CREDENTIAL_KEY ausente}
+      ARTWORK_SIGNING_KEY: ${ARTWORK_SIGNING_KEY:?ARTWORK_SIGNING_KEY ausente}
+      EVOLUTION_BASE_URL: ${EVOLUTION_BASE_URL:-}
+      EVOLUTION_API_KEY: ${EVOLUTION_API_KEY:-}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-deepseek/deepseek-v4.1-flash}
+      EVOLUTION_MODE: ${EVOLUTION_MODE:-fake}
+      EVOLUTION_CONTROL_REAL_ENABLED: ${EVOLUTION_CONTROL_REAL_ENABLED:-0}
+      EVOLUTION_REAL_ENABLED: ${EVOLUTION_REAL_ENABLED:-0}
+      EVOLUTION_REAL_SEND_ENABLED: ${EVOLUTION_REAL_SEND_ENABLED:-0}
+      WEBHOOK_ATTEMPT_LIMIT: ${WEBHOOK_ATTEMPT_LIMIT:-120}
+      ADMIN_SUMMARY_PHONE: ${ADMIN_SUMMARY_PHONE:-}
+      ADMIN_SUMMARY_CONSENT: ${ADMIN_SUMMARY_CONSENT:-0}
+      UPLOADS_DIR: /app/uploads
+      ARTWORK_DIR: /app/artwork
+    volumes:
+      - uploads:/app/uploads
+      - artwork:/app/artwork:ro
+    expose: ["3000"]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+    mem_limit: ${API_MEM_LIMIT:-768m}
+
+  admin:
+    build: { context: .., dockerfile: infra/Dockerfile.web, args: { APP: admin } }
+    networks: [backend, dokploy-network]
+    init: true
+    restart: unless-stopped
+    depends_on:
+      api: { condition: service_healthy }
+    environment:
+      API_INTERNAL_URL: http://api:3000
+      NUXT_API_INTERNAL_URL: http://api:3000
+      ADMIN_ORIGIN: ${ADMIN_ORIGIN:?ADMIN_ORIGIN ausente}
+      NUXT_ADMIN_ORIGIN: ${ADMIN_ORIGIN:?ADMIN_ORIGIN ausente}
+      TRUSTED_PROXY_IPS: ${TRUSTED_PROXY_IPS:-}
+    expose: ["3000"]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+    mem_limit: ${ADMIN_MEM_LIMIT:-512m}
+
+  invite:
+    build: { context: .., dockerfile: infra/Dockerfile.web, args: { APP: invite } }
+    networks: [backend, dokploy-network]
+    init: true
+    restart: unless-stopped
+    depends_on:
+      api: { condition: service_healthy }
+    environment:
+      API_INTERNAL_URL: http://api:3000
+      NUXT_API_INTERNAL_URL: http://api:3000
+      INVITE_ORIGIN: ${INVITE_ORIGIN:?INVITE_ORIGIN ausente}
+      NUXT_INVITE_ORIGIN: ${INVITE_ORIGIN:?INVITE_ORIGIN ausente}
+      TRUSTED_PROXY_IPS: ${TRUSTED_PROXY_IPS:-}
+      WEBHOOK_ATTEMPT_LIMIT: ${WEBHOOK_ATTEMPT_LIMIT:-120}
+    expose: ["3000"]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+    mem_limit: ${INVITE_MEM_LIMIT:-512m}
+
+  worker:
+    build: { context: .., dockerfile: infra/Dockerfile.worker }
+    networks: [backend]
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 180s
+    depends_on:
+      mongo-init: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+    environment:
+      MONGODB_URI: mongodb://${MONGO_USER:?}:${MONGO_PASSWORD:?}@mongo:27017/${MONGO_DATABASE:-zingara}?authSource=admin&replicaSet=rs0
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?REDIS_PASSWORD ausente}
+      REDIS_PREFIX: ${REDIS_PREFIX:-zingara-prod}
+      INVITE_ORIGIN: ${INVITE_ORIGIN:?INVITE_ORIGIN ausente}
+      INVITE_LINK_KEY: ${INVITE_LINK_KEY:?INVITE_LINK_KEY ausente}
+      EVOLUTION_CREDENTIAL_KEY: ${EVOLUTION_CREDENTIAL_KEY:?EVOLUTION_CREDENTIAL_KEY ausente}
+      ARTWORK_SIGNING_KEY: ${ARTWORK_SIGNING_KEY:?ARTWORK_SIGNING_KEY ausente}
+      EVOLUTION_BASE_URL: ${EVOLUTION_BASE_URL:-}
+      EVOLUTION_MODE: ${EVOLUTION_MODE:-fake}
+      EVOLUTION_REAL_ENABLED: ${EVOLUTION_REAL_ENABLED:-0}
+      EVOLUTION_REAL_SEND_ENABLED: ${EVOLUTION_REAL_SEND_ENABLED:-0}
+      ADMIN_SUMMARY_PHONE: ${ADMIN_SUMMARY_PHONE:-}
+      ADMIN_SUMMARY_CONSENT: ${ADMIN_SUMMARY_CONSENT:-0}
+      UPLOADS_DIR: /app/uploads
+      ARTWORK_DIR: /app/artwork
+    volumes:
+      - uploads:/app/uploads:ro
+      - artwork:/app/artwork
+    mem_limit: ${WORKER_MEM_LIMIT:-1g}
+
+volumes:
+  mongo_data:
+  mongo_config:
+  redis_data:
+  uploads:
+  artwork:
+
+networks:
+  backend:
+  dokploy-network:
+    external: true

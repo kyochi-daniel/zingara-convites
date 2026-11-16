@@ -1,0 +1,12 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "env": ["API_PORT", "ADMIN_PORT", "INVITE_PORT", "API_INTERNAL_URL", "ADMIN_ORIGIN", "INVITE_ORIGIN", "MONGODB_URI", "JWT_SECRET", "JWT_ISSUER", "JWT_AUDIENCE"]
+    },
+    "build": { "dependsOn": ["^build"], "env": ["API_INTERNAL_URL", "ADMIN_ORIGIN"], "outputs": [".output/**", ".nuxt/**", "dist/**"] },
+    "typecheck": { "dependsOn": ["^build"], "outputs": [] }
+  }
+}

@@ -1,0 +1,574 @@
+.design-dashboard
+  --dash-bg: var(--dashboard-bg, #0f1011)
+  --dash-surface: var(--dashboard-surface, #171819)
+  --dash-border: var(--dashboard-border, #35373a)
+  --dash-text: var(--dashboard-text, #ece9ef)
+  --dash-muted: var(--dashboard-muted, #8f8b94)
+  display: grid
+  gap: 16px
+  min-width: 0
+  color: var(--dash-text)
+
+  *, *::before, *::after
+    box-sizing: border-box
+
+  button
+    color: inherit
+    font: inherit
+
+  h1, h2, h3, p
+    margin: 0
+
+.dashboard-heading
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 16px
+  padding: 8px 0 3px
+
+  h1
+    font-size: clamp(22px, 2.2vw, 28px)
+    font-weight: 650
+    letter-spacing: -.035em
+
+  p
+    margin-top: 4px
+    color: var(--dashboard-muted, #8f8b94)
+    font-size: 12px
+
+.range-chip
+  flex: 0 0 auto
+  padding: 9px 13px
+  background: #191a1c
+  border: 1px solid rgba(53, 55, 58, .85)
+  border-radius: 13px
+  color: #c8c4cc !important
+  font-size: 10px !important
+
+.metric-grid
+  display: grid
+  grid-template-columns: repeat(4, minmax(0, 1fr))
+  gap: 12px
+
+.metric-card, .dashboard-card
+  min-width: 0
+  background: var(--dash-surface)
+  border: 1px solid var(--dash-border)
+  border-radius: 18px
+
+.metric-card
+  display: flex
+  min-height: 74px
+  align-items: center
+  gap: 12px
+  padding: 13px 14px
+
+.metric-icon
+  display: grid
+  width: 42px
+  height: 42px
+  flex: 0 0 auto
+  place-items: center
+  border-radius: 14px
+
+  img
+    display: block
+
+  &.guests
+    background: #22222c
+
+  &.accepted
+    background: #b8f0cd
+
+  &.pending
+    background: #443b2a
+
+  &.declined
+    background: #3a282e
+
+.metric-copy
+  display: grid
+  min-width: 0
+  gap: 2px
+
+  span
+    overflow: hidden
+    color: #8d8992
+    font-size: 11px
+    text-overflow: ellipsis
+    white-space: nowrap
+
+  strong
+    font-size: 23px
+    font-weight: 650
+    line-height: 1.1
+
+.dashboard-grid
+  display: grid
+  grid-template-columns: minmax(0, 1.6fr) minmax(300px, .84fr)
+  gap: 16px
+
+.dashboard-card
+  padding: 17px 18px
+
+  h2
+    font-size: 14px
+    font-weight: 620
+
+.card-heading
+  display: flex
+  align-items: center
+  justify-content: space-between
+  gap: 12px
+
+.text-action
+  display: inline-flex
+  align-items: center
+  gap: 7px
+  padding: 3px 0
+  background: transparent
+  border: 0
+  color: #9a969f !important
+  cursor: pointer
+  font-size: 10px !important
+
+  img
+    display: block
+
+.event-content
+  display: grid
+  grid-template-columns: minmax(130px, 214px) minmax(0, 1fr)
+  align-items: center
+  gap: 17px
+  margin-top: 15px
+
+.event-photo
+  display: block
+  width: 100%
+  height: 136px
+  border-radius: 15px
+  object-fit: cover
+
+.event-media
+  display: block
+  min-width: 0
+
+.event-details
+  display: grid
+  min-width: 0
+  gap: 8px
+
+  h3
+    overflow: hidden
+    font-size: 15px
+    font-weight: 620
+    text-overflow: ellipsis
+    white-space: nowrap
+
+.event-date, .event-location
+  color: #a09ca5
+  font-size: 10px
+
+.event-location, .event-totals, .event-totals span
+  display: flex
+  align-items: center
+
+.event-location
+  gap: 7px
+
+.event-totals
+  flex-wrap: wrap
+  gap: 7px
+
+  span
+    gap: 6px
+    min-height: 22px
+    padding: 0 8px
+    border-radius: 11px
+    color: #d8d4dc
+    font-size: 9px
+    white-space: nowrap
+
+    &:first-child
+      background: #222326
+
+  .confirmed-pill
+    background: #1a2c22
+    color: #c8ebd3
+
+.empty-event
+  padding: 28px 0 15px
+  color: var(--dash-muted)
+  font-size: 12px
+
+.quick-actions
+  display: grid
+  align-content: start
+  gap: 14px
+
+.quick-action-list
+  display: grid
+  grid-template-columns: repeat(3, minmax(0, 1fr))
+  gap: 6px
+
+.quick-action
+  display: flex
+  min-width: 0
+  min-height: 42px
+  align-items: center
+  gap: 5px
+  padding: 5px
+  background: #191a1c
+  border: 1px solid rgba(52, 54, 58, .9)
+  border-radius: 12px
+  cursor: pointer
+  font-size: 9px !important
+  text-align: left
+
+.action-icon
+  display: grid
+  width: 32px
+  height: 32px
+  flex: 0 0 auto
+  place-items: center
+  border-radius: 11px
+
+  &.invitation
+    background: #f1aec8
+
+  &.import
+    background: #b8f0cd
+
+  &.rsvp
+    background: #fff2a4
+
+.dashboard-tip
+  padding: 11px 13px
+  background: #121314
+  border-radius: 13px
+
+  strong
+    color: #eee9b4
+    font-size: 10px
+
+  p
+    margin-top: 4px
+    color: #8f8b94
+    font-size: 9px
+    line-height: 1.4
+
+.overview-card
+  padding-bottom: 14px
+
+.overview-heading
+  align-items: flex-start
+
+  p
+    margin-top: 5px
+    color: #8f8b94
+    font-size: 10px
+
+.sample-label
+  padding: 4px 7px
+  background: #242527
+  border-radius: 9px
+  color: #c8c4cc
+  font-size: 8px
+  white-space: nowrap
+
+.overview-content
+  display: grid
+  grid-template-columns: minmax(0, 1fr) 180px
+  align-items: end
+  gap: 16px
+  margin-top: 8px
+
+.chart
+  min-width: 0
+  overflow: hidden
+  border-bottom: 1px solid #292a2d
+
+.chart-bars
+  display: flex
+  height: 160px
+  align-items: flex-end
+  justify-content: space-between
+  gap: 5px
+  padding: 0 3px
+
+.chart-bar-wrap
+  display: flex
+  min-width: 0
+  height: 100%
+  flex: 1 1 0
+  flex-direction: column
+  align-items: center
+  justify-content: flex-end
+  gap: 9px
+
+.chart-bar
+  display: block
+  width: min(10px, 74%)
+  flex: 0 0 auto
+  border-radius: 5px 5px 4px 4px
+
+.chart-label
+  height: 13px
+  color: #8f8b94
+  font-size: 8px
+  white-space: nowrap
+
+.overview-total
+  display: grid
+  min-height: 180px
+  align-content: start
+  gap: 5px
+  padding: 16px
+  background: #242527
+  border-radius: 16px
+
+  strong
+    font-size: 22px
+    font-weight: 650
+
+  span, small
+    color: #aaa6af
+    font-size: 9px
+
+  b
+    margin-top: 14px
+    color: #bceac9
+    font-size: 16px
+
+  .progress-track
+    display: block
+    height: 6px
+    margin-top: 9px
+    overflow: hidden
+    background: #393a3d
+    border-radius: 4px
+
+    span
+      display: block
+      height: 100%
+      background: #d9e5a6
+      border-radius: inherit
+
+.rsvp-summary
+  display: grid
+  align-content: start
+  gap: 13px
+
+.summary-event
+  color: #8f8b94
+  font-size: 10px
+
+.rsvp-row
+  display: grid
+  gap: 8px
+
+  > div
+    display: flex
+    justify-content: space-between
+    font-size: 10px
+
+  strong
+    font-weight: 600
+
+  strong.accepted
+    color: #bceac9
+
+  strong.pending
+    color: #f0e5a8
+
+  strong.declined
+    color: #f0a8b7
+
+.rsvp-track
+  display: block
+  height: 8px
+  overflow: hidden
+  background: #292a2d
+  border-radius: 5px
+
+  span
+    display: block
+    height: 100%
+    border-radius: inherit
+
+  span.accepted
+    background: #9ddbb6
+
+  span.pending
+    background: #e8d88c
+
+  span.declined
+    background: #c57888
+
+.reminder-link
+  display: flex
+  min-height: 44px
+  align-items: center
+  justify-content: space-between
+  gap: 10px
+  margin-top: 3px
+  padding: 0 14px
+  background: linear-gradient(100deg, #f5f1b0, #d9e2ff 55%, #e9d0f4)
+  border: 0
+  border-radius: 13px
+  color: #252429 !important
+  cursor: pointer
+  font-size: 10px !important
+  font-weight: 650 !important
+
+.design-dashboard button:focus-visible
+  outline: 3px solid #d9e5a6
+  outline-offset: 3px
+
+@media (max-width: 760px)
+  .design-dashboard
+    gap: 14px
+
+  .dashboard-heading
+    padding: 5px 1px 2px
+
+  .dashboard-heading p
+    max-width: 45ch
+    font-size: 11px
+
+  .range-chip
+    display: none
+
+  .metric-grid
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+    gap: 10px
+
+  .metric-card
+    min-height: 66px
+    gap: 9px
+    padding: 10px
+    border-radius: 16px
+
+  .metric-icon
+    width: 32px
+    height: 32px
+    border-radius: 11px
+
+  .metric-copy strong
+    font-size: 21px
+
+  .dashboard-grid
+    grid-template-columns: minmax(0, 1fr)
+    gap: 14px
+
+  .dashboard-card
+    padding: 15px
+    border-radius: 19px
+
+  .event-content
+    grid-template-columns: 100px minmax(0, 1fr)
+    gap: 12px
+    margin-top: 12px
+
+  .event-photo
+    height: 112px
+
+  .event-details
+    gap: 6px
+
+    h3
+      font-size: 14px
+
+  .event-date, .event-location
+    font-size: 9px
+
+  .event-location
+    align-items: flex-start
+
+  .event-totals
+    gap: 4px
+
+  .event-totals span
+    gap: 4px
+    padding: 0 5px
+    font-size: 8px
+
+  .quick-actions
+    gap: 12px
+
+  .quick-action-list
+    gap: 10px
+
+  .quick-action
+    min-height: 104px
+    flex-direction: column
+    justify-content: center
+    gap: 7px
+    padding: 7px 4px
+    font-size: 10px !important
+    text-align: center
+
+  .action-icon
+    width: 56px
+    height: 56px
+    border-radius: 16px
+
+  .dashboard-tip
+    display: none
+
+  .overview-content
+    grid-template-columns: minmax(0, 1fr) 76px
+    gap: 7px
+    margin-top: 10px
+
+  .chart-bars
+    height: 92px
+    gap: 2px
+
+  .chart-bar-wrap
+    gap: 5px
+
+  .chart-bar
+    max-height: 84px
+    width: min(8px, 80%)
+
+  .chart-label
+    font-size: 7px
+
+  .overview-total
+    min-height: 80px
+    gap: 4px
+    padding: 10px
+    border-radius: 14px
+
+    strong
+      font-size: 17px
+
+    b, .progress-track
+      display: none
+
+    span, small
+      font-size: 8px
+
+  .sample-label
+    font-size: 7px
+
+@media (max-width: 380px)
+  .metric-card
+    gap: 7px
+    padding: 8px
+
+  .metric-copy strong
+    font-size: 19px
+
+  .event-content
+    grid-template-columns: 84px minmax(0, 1fr)
+
+  .event-photo
+    height: 100px
+
+  .event-totals span
+    white-space: normal
+
+  .chart-label
+    font-size: 6px

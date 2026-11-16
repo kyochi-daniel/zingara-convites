@@ -1,0 +1,15 @@
+FROM node:24.11.1-bookworm-slim AS install
+WORKDIR /app
+RUN corepack enable
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps ./apps
+COPY packages ./packages
+RUN pnpm install --prod --frozen-lockfile --filter @zingara/worker...
+
+FROM node:24.11.1-bookworm-slim
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=install --chown=node:node /app /app
+RUN mkdir -p /app/uploads /app/artwork && chown node:node /app/uploads /app/artwork
+USER node
+CMD ["node", "--experimental-strip-types", "apps/worker/src/main.ts"]

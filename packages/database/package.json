@@ -1,0 +1,7 @@
+{
+  "name": "@zingara/database",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": { "mongoose": "9.10.2" }
+}

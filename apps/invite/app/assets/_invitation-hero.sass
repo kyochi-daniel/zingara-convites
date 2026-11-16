@@ -1,0 +1,61 @@
+.invitation-hero
+  display: flex
+  position: relative
+  width: 100%
+  margin: 0 0 0 0
+  padding: 0 0 0 0
+  align-items: center
+  justify-content: center
+
+  :deep(.artwork-image)
+    display: block
+    width: 100%
+    height: auto
+    margin: 0 0 0 0
+    border-radius: 1rem 1rem 1rem 1rem
+
+.invitation-hero--image
+  :deep(.artwork-image)
+    max-width: 50rem
+
+.invitation-hero__cta
+  display: inline-flex
+  position: absolute
+  z-index: 1
+  left: 50%
+  top: clamp(.75rem, 2.5vw, 1.5rem)
+  min-height: 2.75rem
+  width: max-content
+  max-width: calc(100% - 2rem)
+  margin: 0 0 0 0
+  padding: .625rem 1rem .625rem 1rem
+  align-items: center
+  justify-content: center
+  color: CanvasText
+  font: inherit
+  line-height: 1.25
+  text-align: center
+  text-decoration: none
+  white-space: nowrap
+  background: color-mix(in srgb, Canvas 82%, transparent)
+  border: 1px solid color-mix(in srgb, CanvasText 72%, transparent)
+  border-radius: 999px 999px 999px 999px
+  box-shadow: 0 .25rem 1rem color-mix(in srgb, CanvasText 30%, transparent)
+  backdrop-filter: blur(.5rem)
+
+  &:hover
+    background: color-mix(in srgb, Canvas 92%, transparent)
+
+  &:focus-visible
+    outline: .1875rem solid CanvasText
+    outline-offset: .25rem
+
+#responder
+  scroll-margin-top: 1.5rem
+
+@media screen and (max-width: 1000px)
+  .invitation-hero__cta
+    top: .75rem
+    max-width: calc(100% - 1.5rem)
+    padding: .5625rem .875rem .5625rem .875rem
+    white-space: normal

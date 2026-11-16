@@ -1,0 +1,36 @@
+schema: spec-driven
+
+context: |
+  Language: pt-BR
+  All artifacts must be written in pt-BR.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+  Produto: plataforma de convites com gestão privada e convites públicos em domínios separados.
+  M01 concluído; continuidade do MVP autorizada pelo usuário nas etapas 003–008.
+  Stack: Nuxt 4, Nitro, TypeScript, MongoDB/Mongoose, Zod, JWT/jose, Argon2id, Sass, pnpm e Turbo.
+  Frontends usam somente contratos e proxy para API interna; nunca acessam MongoDB.
+  Segurança: validação de entradas, autorização na API, sessão revogável, cookie HttpOnly e CSRF.
+  Testes: escrever cenário executável, observar falha relevante, implementar e verificar.
+  Orquestração de agentes ocorre apenas no Codex; não faz parte do runtime.
+  Não enviar WhatsApp real, publicar ou executar migração de produção sem revisão específica da ação externa.
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing

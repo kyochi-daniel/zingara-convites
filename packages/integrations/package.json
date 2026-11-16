@@ -1,0 +1,6 @@
+{
+  "name": "@zingara/integrations",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/evolution.ts" }
+}
