@@ -54,6 +54,7 @@ test.afterAll(async () => {
 
 test('emite, revela, renova e revoga convite no painel', async ({ page }) => {
   test.setTimeout(60_000)
+  const futureYear = new Date().getFullYear() + 1
   await page.goto(adminOrigin)
   await page.getByLabel('E-mail').fill(email)
   await page.getByLabel('Senha').fill(password)
@@ -73,9 +74,9 @@ test('emite, revela, renova e revoga convite no painel', async ({ page }) => {
   await page.locator('#event-name').fill('Celebração M05')
   await page.locator('#event-location').fill('Jardim das Águas')
   await page.locator('#event-address').fill('Rua das Flores, 123')
-  await page.locator('#event-start').fill('2026-11-15T18:00:00-04:00')
-  await page.locator('#event-end').fill('2026-11-15T23:00:00-04:00')
-  await page.locator('#event-rsvp').fill('2026-11-10T23:59:00-04:00')
+  await page.locator('#event-start').fill(`${futureYear}-11-15T18:00:00-04:00`)
+  await page.locator('#event-end').fill(`${futureYear}-11-15T23:00:00-04:00`)
+  await page.locator('#event-rsvp').fill(`${futureYear}-11-10T23:59:00-04:00`)
   await page.locator('#event-time-zone').selectOption('America/Campo_Grande')
   await page.getByRole('button', { name: 'Criar evento' }).click()
   await expect(page.getByText('Evento criado como rascunho.')).toBeVisible()
@@ -97,8 +98,8 @@ test('emite, revela, renova e revoga convite no painel', async ({ page }) => {
   await expect(invitation.getByText('Prazo de resposta', { exact: true })).toBeVisible()
   await expect(invitation.getByText('Validade do link', { exact: true })).toBeVisible()
   await expect(invitation.getByText('Prazo', { exact: true })).toHaveCount(0)
-  await expect(invitation.locator('.invitation-meta')).toContainText('10/11/2026, 23:59:00 · Horário de Ponta Porã')
-  await expect(invitation.locator('.invitation-meta')).toContainText('15/11/2026, 23:00:00 · Horário de Ponta Porã')
+  await expect(invitation.locator('.invitation-meta')).toContainText(`10/11/${futureYear}, 23:59:00 · Horário de Ponta Porã`)
+  await expect(invitation.locator('.invitation-meta')).toContainText(`15/11/${futureYear}, 23:00:00 · Horário de Ponta Porã`)
   await expect(invitation.getByLabel('Link ativo')).toHaveCount(0)
   await invitation.getByRole('button', { name: 'Revelar link' }).click()
   const revealed = invitation.getByLabel('Link ativo')

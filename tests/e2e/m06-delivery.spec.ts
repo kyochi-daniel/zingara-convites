@@ -57,6 +57,7 @@ test.afterAll(async () => {
 })
 
 test('revisa conteúdo e aprova somente solicitação fake com consentimento', async ({ page }) => {
+  const futureYear = new Date().getFullYear() + 1
   test.setTimeout(60_000)
   await page.goto(adminOrigin)
   await page.getByLabel('E-mail').fill(email)
@@ -87,9 +88,9 @@ test('revisa conteúdo e aprova somente solicitação fake com consentimento', a
   await page.locator('#event-name').fill('Celebração M06 envios')
   await page.locator('#event-location').fill('Jardim das Águas')
   await page.locator('#event-address').fill('Rua das Flores, 123')
-  await page.locator('#event-start').fill('2026-11-15T18:00:00-04:00')
-  await page.locator('#event-end').fill('2026-11-15T23:00:00-04:00')
-  await page.locator('#event-rsvp').fill('2026-11-10T23:59:00-04:00')
+  await page.locator('#event-start').fill(`${futureYear}-11-15T18:00:00-04:00`)
+  await page.locator('#event-end').fill(`${futureYear}-11-15T23:00:00-04:00`)
+  await page.locator('#event-rsvp').fill(`${futureYear}-11-10T23:59:00-04:00`)
   await page.locator('#event-time-zone').selectOption('America/Campo_Grande')
   await page.getByRole('button', { name: 'Criar evento' }).click()
   await expect(page.getByText('Evento criado como rascunho.')).toBeVisible()
@@ -115,7 +116,7 @@ test('revisa conteúdo e aprova somente solicitação fake com consentimento', a
   await expect(page.getByLabel('Texto que será enviado')).not.toHaveValue('')
   await expect(page.getByLabel('Texto que será enviado')).toHaveValue(/^Olá, Ana autorizada\./)
   await expect(page.getByLabel('Texto que será enviado')).toHaveValue(/Horário de Ponta Porã/)
-  await expect(page.getByLabel('Texto que será enviado')).toHaveValue(/10 de novembro de 2026, às 23:59/)
+  await expect(page.getByLabel('Texto que será enviado')).toHaveValue(new RegExp(`10 de novembro de ${futureYear}, às 23:59`))
   await expect(page.getByLabel('Texto que será enviado')).not.toHaveValue(/convite\.exemplo|Ana Convidada/)
   await expect(page.getByLabel('Link individual do convite')).toHaveValue(/^https?:\/\//)
 
